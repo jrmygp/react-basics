@@ -6,15 +6,16 @@ import {
   CardText,
   Button,
 } from "reactstrap";
+import { FaHeart } from "react-icons/fa"
+import { IoIosPaperPlane } from "react-icons/io";
+import { MdReportProblem } from "react-icons/md";
 
-import { FaHandMiddleFinger } from "react-icons/fa";
-
-import newyork from "./newyork.jpeg";
-const username = "seto";
-const location = "BSD";
+import newyork from "./twintower.jpeg";
+const username = "Anonymous";
+const location = "Manhattan, New York City";
 const numberOfLikes = 69420;
 const caption =
-  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, odit explicabo? Possimus nam necessitatibus praesentium sit at, vero quod neque, quaerat quasi excepturi totam quos. Expedita dicta non enim aspernatur corrupti necessitatibus nobis mollitia sed sapiente ducimus placeat, illo odit fugit quia error debitis ullam quo quidem? Corporis vitae adipisci voluptatibus reiciendis illum voluptas atque pariatur iusto aperiam aliquam minima cupiditate ab veritatis, eos ipsum at natus, possimus soluta ad?";
+  "World Trade Center aka. Twin towers (2011) seconds before getting hit by a plane.";
 
 const ContentCard = () => {
   const likePost = (amount) => {
@@ -30,7 +31,6 @@ const ContentCard = () => {
         <CardSubtitle tag="h6" className="text-muted mb-4">
           {location}
         </CardSubtitle>
-
         <img
           style={{
             width: "100%",
@@ -39,7 +39,6 @@ const ContentCard = () => {
           src={newyork}
           alt="user's content"
         />
-
         <CardText tag="h6" className="fw-bold mt-3">
           {numberOfLikes.toLocaleString()} People like this.
         </CardText>
@@ -49,15 +48,35 @@ const ContentCard = () => {
             {caption.length > 140 ? caption.slice(0, 140) + "..." : caption}
           </span>
         </CardText>
+        <div className="d-flex">
+          <Button
+            onClick={() => likePost(14)}
+            color="danger"
+            className="d-flex justify-content-center align-items-center"
+          >
+            <FaHeart/>
+          </Button>
 
-        <Button
-          onClick={() => likePost(14)}
-          color="danger"
-          className="d-flex justify-content-center align-items-center"
-        >
-          Like &nbsp;
-          <FaHandMiddleFinger />
-        </Button>
+          <Button
+            color="danger"
+            className="d-flex justify-content-center align-items-center ms-2"
+          >
+            <MdReportProblem />
+          </Button>
+        </div>
+
+        <CardText className="mt-3">
+          <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Add Comment"
+            />{" "}
+            <button className="btn btn-outline-secondary" type="button">
+              <IoIosPaperPlane />
+            </button>
+          </div>
+        </CardText>
       </CardBody>
     </Card>
   );
