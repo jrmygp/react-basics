@@ -9,27 +9,21 @@ import {
 import { FaHeart } from "react-icons/fa"
 import { IoIosPaperPlane } from "react-icons/io";
 import { MdReportProblem } from "react-icons/md";
-
 import newyork from "./twintower.jpeg";
-const username = "Anonymous";
-const location = "Manhattan, New York City";
-const numberOfLikes = 69420;
-const caption =
-  "World Trade Center aka. Twin towers (2011) seconds before getting hit by a plane.";
 
-const ContentCard = () => {
+const ContentCard = (props) => {
   const likePost = (amount) => {
-    numberOfLikes += 1;
-    alert(`Liked post ${numberOfLikes}`);
+    props.numberOfLikes += 1;
+    alert(`Liked post ${props.numberOfLikes}`);
   };
   return (
     <Card>
       <CardBody>
         <CardTitle tag="h5" className="fw-bold">
-          {username}
+          {props.username}
         </CardTitle>
         <CardSubtitle tag="h6" className="text-muted mb-4">
-          {location}
+          {props.location}
         </CardSubtitle>
         <img
           style={{
@@ -40,12 +34,12 @@ const ContentCard = () => {
           alt="user's content"
         />
         <CardText tag="h6" className="fw-bold mt-3">
-          {numberOfLikes.toLocaleString()} People like this.
+          {props.numberOfLikes.toLocaleString()} People like this.
         </CardText>
         <CardText>
-          <span className="fw-bold">{username} </span>{" "}
+          <span className="fw-bold">{props.username} </span>{" "}
           <span>
-            {caption.length > 140 ? caption.slice(0, 140) + "..." : caption}
+            {props.caption.length > 140 ? props.caption.slice(0, 140) + "..." : props.caption}
           </span>
         </CardText>
         <div className="d-flex">
