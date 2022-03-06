@@ -5,27 +5,8 @@ import ContentCard from "./components/ContentCard/ContentCard";
 import "./assets/card-styles.css";
 import ToDoItem from "./components/ToDoItem/ToDoItem";
 import { Button, Input } from "reactstrap";
+import axios from "axios"
 
-// const data = [
-//   {
-//     username: "seto",
-//     location: "BSD",
-//     numberOfLikes: 1231,
-//     caption: "halo gaes",
-//   },
-//   {
-//     username: "Volinsky",
-//     location: "Russia",
-//     numberOfLikes: 1929101,
-//     caption: "About to go to Ukraine, wish me luck!",
-//   },
-//   {
-//     username: "Makachaev",
-//     location: "Ukraine",
-//     numberOfLikes: 929292123,
-//     caption: "Kill those russian invaders!",
-//   },
-// ];
 
 function App() {
   const renderContentList = () => {
@@ -35,31 +16,15 @@ function App() {
           tanggal={val.tanggal}
           title={val.title}
           status={val.status}
-          editItem={() => editItem(index)}
-          deleteItem={() => deleteItem(index)}
+          editItem={() => editItem(val.id)}
+          deleteItem={() => deleteItem(val.id)}
         />
       );
     });
     return renderArr;
   };
 
-  const [todoList, setTodoList] = useState([
-    {
-      tanggal: new Date(),
-      title: "belajar programming",
-      status: "On Going",
-    },
-    {
-      tanggal: new Date(),
-      title: "belajar programming",
-      status: "On Going",
-    },
-    {
-      tanggal: new Date(),
-      title: "belajar programming",
-      status: "Done",
-    },
-  ]);
+  const [todoList, setTodoList] = useState([]);
 
   const [todoInputValue, setTodoInputValue] = useState("");
   const [dateInputValue, setDateInputValue] = useState("");
@@ -75,30 +40,49 @@ function App() {
   };
 
   const addTodoItem = () => {
-    const newTodoArray = [...todoList];
-    newTodoArray.push({
+    const newData = {
       tanggal: dateInputValue,
       title: todoInputValue,
       status: "On Going",
-    });
-    setTodoList(newTodoArray);
-  };
-
-  const deleteItem = (index) => {
-    const finalTodoArray = [...todoList];
-    finalTodoArray.splice(index, 1);
-    setTodoList(finalTodoArray);
-  };
-
-  const editItem = (index) => {
-    const editTodoArray = [...todoList];
-    if (editTodoArray[index].status === "Done") {
-      editTodoArray[index].status = "On Going";
-    } else if (editTodoArray[index].status === "On Going") {
-      editTodoArray[index].status = "Done";
     }
-    setTodoList(editTodoArray);
+    axios.post("http://localhost:2000/todos", newData)
+    .then(() => {
+      fetchTodoList()
+    })
   };
+
+  const deleteItem = (id) => {
+    axios.delete(`http://localhost:2000/todos/${id}`)
+    .then(() => {
+      fetchTodoList()
+    })
+  };
+
+  const editItem = (id) => {
+    let newStatusValue
+    axios.get(`http://localhost:2000/todos/${id}`)
+    .then((res) => {
+      // newStatusValue = res.data.status
+      if (res.data.status === "Done") {
+        newStatusValue = "On Going"
+      } else if (res.data.status === "On Going") {
+        newStatusValue = "Done"
+      }
+      
+      axios.patch(`http://localhost:2000/todos/${id}`,{ status: newStatusValue})
+      .then(() => {
+        fetchTodoList()
+      })
+    })
+  };
+
+  const fetchTodoList = () => {
+    axios.get("http://localhost:2000/todos")
+    .then((res) => {
+      setTodoList(res.data)
+    })
+  }
+
   return (
     <>
       <div className="container mt-3 $green-800">
@@ -113,6 +97,7 @@ function App() {
                 {" "}
                 Add Todo{" "}
               </Button>
+              <Button onClick={fetchTodoList} color="info">Fetch Todo</Button>
             </div>
           </div>
           <div className="col-12 col-md-10 offset-md-1 col-lg-6 offset-lg-3">

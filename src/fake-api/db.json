@@ -1,0 +1,34 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "tanggal": "03-22-2022",
+      "title": "belajar programming",
+      "status": "On Going"
+    },
+    {
+      "id": 2,
+      "tanggal": "03-25-2022",
+      "title": "belajar front end",
+      "status": "Done"
+    },
+    {
+      "tanggal": "2022-03-12",
+      "title": "test",
+      "status": "On Going",
+      "id": 4
+    },
+    {
+      "tanggal": "2022-03-27",
+      "title": "todo baru",
+      "status": "Done",
+      "id": 5
+    },
+    {
+      "tanggal": "2022-03-15",
+      "title": "beli galon",
+      "status": "On Going",
+      "id": 6
+    }
+  ]
+}
